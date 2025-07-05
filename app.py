@@ -16,9 +16,10 @@ header {visibility: hidden;}
 """, unsafe_allow_html=True)
 
 st.markdown("""
-<h1 style='text-align: center; color: #2C6E49;'>🌿 Strive - Sustainable Tourism Initiative</h1>
-<h4 style='text-align: center; color: gray;'>SROI Calculator: Valuing Impact in Langkat’s Village Entrepreneurship</h4>
+<h1 style='text-align: center; color: #2C6E49;'>📊 Social Return on Investment (SROI) Calculator</h1>
+<h4 style='text-align: center; color: gray;'>A Tool for Multi-Year Social Impact & Value Forecasting</h4>
 """, unsafe_allow_html=True)
+
 
 # Jumlah baris input stakeholder
 rows = st.number_input("Jumlah Stakeholder / Outcome", min_value=1, max_value=20, value=9)

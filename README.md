@@ -1,4 +1,3 @@
-
 # SROI Calculator – Strive: Sustainable Tourism Initiative
 
 An interactive Streamlit-based app to calculate and project **Social Return on Investment (SROI)**
@@ -28,7 +27,7 @@ sroi-calculator-strive/
 │
 ├── app.py      # Main Streamlit app
 ├── README.md                    # You're here
-└──requirements.txt             # Python dependencies
+└── requirements.txt             # Python dependencies
 ```
 
 ---
