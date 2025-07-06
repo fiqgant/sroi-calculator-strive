@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="SROI Calculator - STRIVE", layout="wide")  # HARUS DI ATAS
+st.set_page_config(page_title="SROI Calculator - Multi Year", layout="wide")
 
 import streamlit_authenticator as stauth
 import yaml
@@ -9,7 +9,7 @@ import numpy as np
 import math
 import matplotlib.pyplot as plt
 
-# === Load login config ===
+# === Load config from YAML ===
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
@@ -20,13 +20,23 @@ authenticator = stauth.Authenticate(
     config['cookie']['expiry_days']
 )
 
+# === Tampilan Custom Login Header ===
+if st.session_state.get("authentication_status") is None:
+    st.markdown("""
+    <div style="text-align: center; margin-top: 100px;">
+        <h1 style="color: #2C6E49; font-size: 2.5em;">STRIVE</h1>
+        <h3 style="color: gray; margin-top: -10px;">Sustainable Tourism Initiative</h3>
+        <p style="font-size: 1.1em; color: #666;">Login untuk mengakses Kalkulator SROI</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 authenticator.login()
 
-# === Handle Login Status ===
+# === Login Logic ===
 if st.session_state.get("authentication_status") is False:
     st.error("Username/password salah.")
 elif st.session_state.get("authentication_status") is None:
-    st.warning("Silakan login terlebih dahulu.")
+    st.stop()  # Berhenti sampai login berhasil
 elif st.session_state.get("authentication_status"):
     authenticator.logout('Logout', 'sidebar')
     st.sidebar.success(f"Login sebagai {st.session_state.get('name')}")
