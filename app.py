@@ -1,5 +1,3 @@
-# sroi_full_calculator.py
-
 import streamlit as st
 import streamlit_authenticator as stauth
 import pandas as pd
@@ -8,15 +6,19 @@ import math
 import matplotlib.pyplot as plt
 
 # === LOGIN CONFIG ===
-names = ['Admin SROI']
+names = ['Admin Strive']
 usernames = ['admin_strive']
 passwords = ['Strive123!@#']
 
-hashed_passwords = stauth.Hasher(passwords).generate()
+# Perbaikan penggunaan Hasher
+hashed_passwords = stauth.Hasher(passwords=passwords).generate()
 
 authenticator = stauth.Authenticate(
     credentials={"usernames": {
-        usernames[0]: {"name": names[0], "password": hashed_passwords[0]}
+        usernames[0]: {
+            "name": names[0],
+            "password": hashed_passwords[0]
+        }
     }},
     cookie_name="sroi_app",
     key="abcdef",
@@ -33,7 +35,7 @@ elif authentication_status:
     authenticator.logout('Logout', 'sidebar')
     st.sidebar.success(f"Login sebagai {name}")
 
-    # === SROI APP START ===
+    # === MULAI APLIKASI SROI ===
 
     st.set_page_config(page_title="SROI Calculator - Multi Year", layout="wide")
     st.markdown("""
