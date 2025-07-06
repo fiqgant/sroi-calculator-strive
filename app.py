@@ -1,43 +1,38 @@
 import streamlit as st
+st.set_page_config(page_title="SROI Calculator - STRIVE", layout="wide")  # HARUS DI ATAS
+
 import streamlit_authenticator as stauth
+import yaml
+from yaml.loader import SafeLoader
 import pandas as pd
 import numpy as np
 import math
 import matplotlib.pyplot as plt
 
-# === LOGIN CONFIG ===
-names = ['Admin Strive']
-usernames = ['admin_strive']
-passwords = ['Strive123!@#']
-
-# Perbaikan penggunaan Hasher
-hashed_passwords = stauth.Hasher(passwords=passwords).generate()
+# === Load login config ===
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
-    credentials={"usernames": {
-        usernames[0]: {
-            "name": names[0],
-            "password": hashed_passwords[0]
-        }
-    }},
-    cookie_name="sroi_app",
-    key="abcdef",
-    cookie_expiry_days=1
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days']
 )
 
-name, authentication_status, username = authenticator.login('Login', 'main')
+authenticator.login()
 
-if authentication_status is False:
-    st.error('Username/password salah.')
-elif authentication_status is None:
-    st.warning('Silakan login terlebih dahulu.')
-elif authentication_status:
+# === Handle Login Status ===
+if st.session_state.get("authentication_status") is False:
+    st.error("Username/password salah.")
+elif st.session_state.get("authentication_status") is None:
+    st.warning("Silakan login terlebih dahulu.")
+elif st.session_state.get("authentication_status"):
     authenticator.logout('Logout', 'sidebar')
-    st.sidebar.success(f"Login sebagai {name}")
+    st.sidebar.success(f"Login sebagai {st.session_state.get('name')}")
 
-    # === MULAI APLIKASI SROI ===
+    # === APLIKASI SROI DIMULAI ===
 
-    st.set_page_config(page_title="SROI Calculator - Multi Year", layout="wide")
     st.markdown("""
     <style>
     #MainMenu {visibility: hidden;}

@@ -1,0 +1,11 @@
+credentials:
+  usernames:
+    admin_strive:
+      email: admin@strive.id
+      first_name: Admin
+      last_name: Strive
+      password: Strive123!@#
+cookie:
+  expiry_days: 1
+  key: strive_cookie_key
+  name: strive_sroi_session
